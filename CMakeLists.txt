@@ -8,14 +8,14 @@ set(TARGET_NAME
     "sdizo")
 
 set(SOURCES
-src/main.cpp)
+src/IncidenceMatrix.cpp)
 
 set(TESTS
-tests/test.cpp)
+tests/IncidenceMatrixTest.cpp)
 
 find_package(Catch2 REQUIRED)
 
-add_executable(test ${TESTS})
+add_executable(test ${TESTS} ${SOURCES})
 target_link_libraries(test PRIVATE Catch2::Catch2)
 
 if (MSVC)
@@ -24,4 +24,4 @@ else()
     add_compile_options(-Wall -Wextra -pedantic -Werror)
 endif()
 
-add_executable(${TARGET_NAME} ${SOURCES})
+add_executable(${TARGET_NAME} src/main.cpp ${SOURCES})
