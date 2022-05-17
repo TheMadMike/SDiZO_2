@@ -8,10 +8,11 @@ set(TARGET_NAME
     "sdizo")
 
 set(SOURCES
-src/IncidenceMatrix.cpp)
+src/IncidenceMatrix.cpp
+src/DisjointSet.cpp)
 
 set(TESTS
-tests/IncidenceMatrixTest.cpp)
+tests/tests.cpp)
 
 find_package(Catch2 REQUIRED)
 
