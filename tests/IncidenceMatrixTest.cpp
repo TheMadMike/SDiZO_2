@@ -10,8 +10,8 @@ TEST_CASE("Adding and removing edges from the incidence matrix", "[IncidenceMatr
 
     SECTION("after adding an edge, vertex and edge count should increase") {
 
-        REQUIRE(graph.getEdgeCount() == 1);
-        REQUIRE(graph.getVertexCount() == 2);
+        REQUIRE(graph.getEdgesNumber() == 1);
+        REQUIRE(graph.getVerticesNumber() == 2);
     }
     
     int** matrix = graph.getMatrix();
@@ -25,7 +25,7 @@ TEST_CASE("Adding and removing edges from the incidence matrix", "[IncidenceMatr
 
     SECTION("after removing an edge, edge count should decrease") {
        
-        REQUIRE(graph.getEdgeCount() == 0);
+        REQUIRE(graph.getEdgesNumber() == 0);
     }
 
     SECTION("removing an unexisting edge should throw an exception") {
@@ -35,8 +35,8 @@ TEST_CASE("Adding and removing edges from the incidence matrix", "[IncidenceMatr
     auto copy = graph;
     SECTION("should properly copy the matrix") {
         
-        for(size_t i = 0; i < copy.getVertexCount(); ++i) {
-            for(size_t j = 0; j < copy.getEdgeCount(); ++j) {
+        for(size_t i = 0; i < copy.getVerticesNumber(); ++i) {
+            for(size_t j = 0; j < copy.getEdgesNumber(); ++j) {
                 REQUIRE(copy.getMatrix()[i][j] == graph.getMatrix()[i][j]);
             }
         }

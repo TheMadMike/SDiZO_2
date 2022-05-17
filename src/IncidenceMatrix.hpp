@@ -16,8 +16,8 @@ public:
     void addEdge(size_t start, size_t end, T weight);
     void removeEdge(size_t start, size_t end);
 
-    inline size_t getEdgeCount() { return edges; }
-    inline size_t getVertexCount() { return vertices; }
+    inline size_t getEdgesNumber() { return edges; }
+    inline size_t getVerticesNumber() { return vertices; }
 
     inline T** getMatrix() { return matrix; }
 
