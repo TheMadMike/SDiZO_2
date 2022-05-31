@@ -3,7 +3,7 @@
 
 using namespace sdizo;
 
-TEST_CASE("Adding and removing edges from the incidence matrix", "[IncidenceMatrix]") {
+TEST_CASE("Edge manipulation", "[IncidenceMatrix]") {
     auto graph = IncidenceMatrix<int>();
 
     graph.addEdge(0, 1, 1);
@@ -29,7 +29,7 @@ TEST_CASE("Adding and removing edges from the incidence matrix", "[IncidenceMatr
     }
 
     SECTION("removing an unexisting edge should throw an exception") {
-        REQUIRE_THROWS_AS(graph.removeEdge(0, 1), std::bad_array_new_length);
+        REQUIRE_THROWS_AS(graph.removeEdge(0, 1), std::runtime_error);
     }
 
     auto copy = graph;
@@ -40,6 +40,25 @@ TEST_CASE("Adding and removing edges from the incidence matrix", "[IncidenceMatr
                 REQUIRE(copy.getMatrix()[i][j] == graph.getMatrix()[i][j]);
             }
         }
+    }
+
+    graph.addEdge(0, 1, 1);
+    graph.addEdge(1, 2, 2);
+    graph.addEdge(0, 2, 3);
+
+    SECTION("should return proper edge array") {
+        Edge<int>* edges = graph.getAllEdges();
+        size_t size = graph.getEdgesNumber();
+
+        for(size_t i = 0; i < size; ++i) {
+            REQUIRE(edges[i].weight == static_cast<int>(i+1));
+        }    
+    }
+
+    SECTION("should swap edges") {
+        graph.swapEdges(0, 1);
+        REQUIRE(graph.getEdge(0).weight == 2);
+        REQUIRE(graph.getEdge(1).weight == 1);
     }
 
 }

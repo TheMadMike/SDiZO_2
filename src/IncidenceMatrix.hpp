@@ -1,7 +1,7 @@
 #ifndef INCIDENCE_MATRIX_HPP
 #define INCIDENCE_MATRIX_HPP
 
-#include <cstddef>
+#include "Edge.hpp"
 
 namespace sdizo {
 
@@ -21,10 +21,18 @@ public:
 
     inline T** getMatrix() { return matrix; }
 
+    void swapEdges(size_t a, size_t b);
+
+    Edge<T> getEdge(size_t index);
+    Edge<T>* getAllEdges();
+
+    size_t findEdgeIndex(size_t start, size_t end);
+
+    void printMatrix();
+
 private:
     T** copyMatrix(size_t vertices, size_t edges);
     void deleteMatrix();
-    void swapEdges(size_t a, size_t b);
 
     T** matrix;
 

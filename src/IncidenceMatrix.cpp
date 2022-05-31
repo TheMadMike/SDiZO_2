@@ -1,6 +1,7 @@
 #include "IncidenceMatrix.hpp"
 #include <stdexcept>
 #include <cmath>
+#include <cstdio>
 
 namespace sdizo {
 
@@ -38,10 +39,22 @@ void IncidenceMatrix<T>::addEdge(size_t start, size_t end, T weight) {
     
     ++edges;
 
+
     matrix[start][edges - 1] = weight;
     matrix[end][edges - 1] = -weight;
 
     vertices = maxVertices;
+}
+
+template<typename T>
+size_t IncidenceMatrix<T>::findEdgeIndex(size_t start, size_t end) {
+    for(size_t i = 0; i < edges; ++i) {
+        if(matrix[start][i] == -matrix[end][i]) {
+            return i;
+        }
+    }
+
+    throw std::runtime_error("Edge not found");
 }
 
 template<typename T>
@@ -50,11 +63,8 @@ void IncidenceMatrix<T>::removeEdge(size_t start, size_t end) {
         throw std::out_of_range("Vertices out of range!");
     }
 
-    for(size_t i = 0; i < edges; ++i) {
-        if(std::abs(matrix[start][i]) == std::abs(matrix[end][i])) {
-            swapEdges(i, edges - 1);
-        }
-    }
+    size_t index = findEdgeIndex(start, end);
+    swapEdges(index, edges - 1);
 
     T** copy = copyMatrix(vertices, edges - 1);
 
@@ -67,8 +77,14 @@ void IncidenceMatrix<T>::removeEdge(size_t start, size_t end) {
 template<typename T>
 T** IncidenceMatrix<T>::copyMatrix(size_t newVertices, size_t newEdges) {
     T** copy = new T*[newVertices];
+
     for(size_t i = 0; i < newVertices; ++i) {
         copy[i] = new T[newEdges];
+        //fill with zeros
+        for(size_t j = 0; j < newEdges; ++j) {
+            copy[i][j] = 0;
+        }
+    
         if(i < this->vertices) {
             for(size_t j = 0; j < this->edges; ++j) {
                 copy[i][j] = matrix[i][j];
@@ -77,6 +93,38 @@ T** IncidenceMatrix<T>::copyMatrix(size_t newVertices, size_t newEdges) {
     }
 
     return copy;
+}
+
+template<typename T>
+Edge<T> IncidenceMatrix<T>::getEdge(size_t index) {
+    Edge<T> edge = {};
+    size_t vertex = 0;
+    
+    while(vertex < vertices) {
+        if(matrix[vertex][index] > 0) {
+            edge.start = vertex;
+            edge.weight = matrix[vertex][index];
+        }
+
+        if(matrix[vertex][index] < 0) {
+            edge.end = vertex;
+        }
+
+        ++vertex;
+    }
+
+    return edge;
+}
+
+template<typename T>
+Edge<T>* IncidenceMatrix<T>::getAllEdges() {
+    Edge<T>* allEdges = new Edge<T>[edges];
+
+    for(size_t i = 0; i < edges; ++i) {
+        allEdges[i] = getEdge(i);
+    }
+
+    return allEdges;
 }
 
 template<typename T>
@@ -95,6 +143,18 @@ void IncidenceMatrix<T>::deleteMatrix() {
     }
 
     delete[] matrix;
+}
+
+template<typename T>
+void IncidenceMatrix<T>::printMatrix() {
+    
+    for(size_t i = 0; i < vertices; ++i) {
+        for(size_t j = 0; j < edges; ++j) {
+            printf("%d ", matrix[i][j]);
+        }
+        puts("\n");
+    }
+
 }
 
 template class IncidenceMatrix<int>;
