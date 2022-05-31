@@ -5,8 +5,10 @@ namespace sdizo {
 DisjointSet::DisjointSet(size_t size) 
 :size(size) {
     data = new size_t[size];
+    rank = new size_t[size];
     for(size_t i = 0; i < size; ++i) {
         data[i] = i;
+        rank[i] = 0;
     }
 }
 
@@ -15,29 +17,30 @@ DisjointSet::~DisjointSet() {
 }
 
 size_t DisjointSet::find(size_t p) {
-    size_t root = p;
-    while(root != data[root])
-        root = data[root];
-    
-    //path compression
-    while(p != root) {
-        size_t next = data[p];
-        data[p] = root;
-        p = next;
-    }
+    if(data[p] != p)
+        data[p] = find(data[p]);
 
-    return root;
+    return data[p];
 }
 
-size_t DisjointSet::unify(size_t a, size_t b) {
-    size_t a_root = this->find(a);
-    size_t b_root = this->find(b);
+void DisjointSet::unify(size_t a, size_t b) {
+    size_t aRoot = this->find(a);
+    size_t bRoot = this->find(b);
     
-    if(a_root == b_root)
-        return a_root;
+    if(aRoot == bRoot)
+        return;
     
-    data[a] = data[b];
-    return data[a];
+    if (rank[aRoot] < rank[bRoot]) {
+        data[aRoot] = bRoot;
+    }
+    else if (rank[aRoot] > rank[bRoot]) {
+        data[bRoot] = aRoot;
+    }
+
+    else {
+        data[bRoot] = aRoot;
+        rank[aRoot] += 1;
+    }
 }
 
 };

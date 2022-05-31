@@ -12,10 +12,10 @@ public:
 
     size_t find(size_t p);
 
-    size_t unify(size_t a, size_t b);
+    void unify(size_t a, size_t b);
 
 private:
-    size_t* data;
+    size_t* data, *rank;
     size_t size;
 };
 
