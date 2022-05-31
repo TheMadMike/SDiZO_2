@@ -7,13 +7,14 @@ namespace sdizo {
 
 
 /**
- * @brief Sorts an array of integers in an ascending order
+ * @brief Sorts an array in an ascending order
  * 
  * @param array a pointer to the array being sorted
  * @param begin the first index of the array
  * @param end the last index of the array
  */
-void mergeSort(int array[], size_t begin, size_t end);
+template<typename T>
+void mergeSort(T array[], size_t begin, size_t end);
 
 };
 

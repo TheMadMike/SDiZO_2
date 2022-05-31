@@ -1,23 +1,27 @@
 #include "Sort.hpp"
+#include "Edge.hpp"
 
 namespace sdizo {
 
-void merge(int array[], size_t begin, size_t middle, size_t end);
+template<typename T>
+void merge(T array[], size_t begin, size_t middle, size_t end);
 
-void mergeSort(int array[], size_t begin, size_t end) {
+template<typename T>
+void mergeSort(T array[], size_t begin, size_t end) {
     if((begin >= end) || (array == nullptr))
         return;
 
     size_t middle = (begin + end) / 2;
-    mergeSort(array, begin, middle);
-    mergeSort(array, middle+1, end);
-    merge(array, begin, middle, end);
+    mergeSort<T>(array, begin, middle);
+    mergeSort<T>(array, middle+1, end);
+    merge<T>(array, begin, middle, end);
 
 }
 
-void merge(int array[], size_t begin, size_t middle, size_t end) {
+template<typename T>
+void merge(T array[], size_t begin, size_t middle, size_t end) {
     size_t bufferSize = end - begin + 1;
-    int* buffer = new int[bufferSize];
+    T* buffer = new T[bufferSize];
 
     /*  indexes for iterating over 
      *  the left and right halves of the array
@@ -57,5 +61,11 @@ void merge(int array[], size_t begin, size_t middle, size_t end) {
 
     delete[] buffer;
 }
+
+template void merge<Edge<int>>(Edge<int>[], size_t, size_t, size_t);
+template void mergeSort<Edge<int>>(Edge<int>[], size_t, size_t);
+
+template void merge<int>(int[], size_t, size_t, size_t);
+template void mergeSort<int>(int[], size_t, size_t);
 
 };

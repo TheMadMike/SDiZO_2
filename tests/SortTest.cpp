@@ -1,5 +1,6 @@
 #include <catch2/catch.hpp>
 #include "../src/Sort.hpp"
+#include "../src/Edge.hpp"
 
 using namespace sdizo;
 
@@ -9,14 +10,14 @@ TEST_CASE("Sorting an array", "[mergeSort]") {
 
     mergeSort(array, 0, 2);
 
-    SECTION("should sort the array in an ascending order") {
+    SECTION("should sort an array of integers in an ascending order") {
         for(size_t i = 0; i < 3; ++i) {
             REQUIRE(array[i] == static_cast<int>(i + 1));
         }
     }
 
     SECTION("should do nothing with a nullptr") {
-        REQUIRE_NOTHROW(mergeSort(nullptr, 0, 1));
+        REQUIRE_NOTHROW(mergeSort<int>(nullptr, 0, 1));
     }
 
     array[0] = 4;
@@ -26,4 +27,12 @@ TEST_CASE("Sorting an array", "[mergeSort]") {
         REQUIRE(array[0] == 4);
     }
 
+    Edge<int> edges[] = {{0, 1, 3}, {0, 2, 2}, {0, 3, 1}};
+    
+    SECTION("should sort an array of edges in an ascending order") {
+        REQUIRE_NOTHROW(mergeSort(edges, 0, 2));
+        for(size_t i = 0; i < 3; ++i) {
+            REQUIRE(edges[i].weight == static_cast<int>(i + 1));
+        }
+    }
 }
