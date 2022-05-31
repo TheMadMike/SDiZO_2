@@ -1,7 +1,8 @@
 #include "IncidenceMatrix.hpp"
 #include <stdexcept>
 #include <cmath>
-#include <cstdio>
+#include <iostream>
+#include <iomanip>
 
 namespace sdizo {
 
@@ -148,13 +149,40 @@ void IncidenceMatrix<T>::deleteMatrix() {
 template<typename T>
 void IncidenceMatrix<T>::printMatrix() {
     
-    for(size_t i = 0; i < vertices; ++i) {
-        for(size_t j = 0; j < edges; ++j) {
-            printf("%d ", matrix[i][j]);
-        }
-        puts("\n");
+    std::cout << std::right << "V\\E:" << std::setw(3);  
+
+    for(size_t i = 0; i < edges; ++i) {
+        std::cout << std::right << i << std::setw(6);    
     }
 
+    std::cout << '\n';
+
+    for(size_t i = 0; i < vertices; ++i) {
+        std::cout << std::right << i << std::setw(6);
+        for(size_t j = 0; j < edges; ++j) {
+            std::cout << std::right << matrix[i][j] << std::setw(6);
+        }
+        std::cout << '\n';
+    }
+
+}
+
+template<typename T>
+void IncidenceMatrix<T>::operator = (const IncidenceMatrix<T>& rhs) {
+    if(matrix != nullptr)
+        deleteMatrix();
+
+    this->edges = rhs.edges;
+    this->vertices = rhs.vertices;
+    
+    matrix = new T*[vertices];
+    
+    for(size_t i = 0; i < vertices; ++i) {
+        matrix[i] = new T[edges];
+        for(size_t j = 0; j < edges; ++j) {
+            matrix[i][j] = rhs.matrix[i][j];
+        }
+    }
 }
 
 template class IncidenceMatrix<int>;

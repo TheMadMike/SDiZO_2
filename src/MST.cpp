@@ -28,7 +28,7 @@ IncidenceMatrix<int> MST::kruskal(IncidenceMatrix<int> graph) {
 }
 
 IncidenceMatrix<int> MST::prim(IncidenceMatrix<int> graph) {
-
+    return graph;
 }
 
 };
