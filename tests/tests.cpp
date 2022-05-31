@@ -4,3 +4,4 @@
 #include "IncidenceMatrixTest.cpp"
 #include "DisjointSetTest.cpp"
 #include "SortTest.cpp"
+#include "MSTTest.cpp"

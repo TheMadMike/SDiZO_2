@@ -10,7 +10,8 @@ set(TARGET_NAME
 set(SOURCES
 src/IncidenceMatrix.cpp
 src/DisjointSet.cpp
-src/Sort.cpp)
+src/Sort.cpp
+src/MST.cpp)
 
 set(TESTS
 tests/tests.cpp)
