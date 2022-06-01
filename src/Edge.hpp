@@ -11,6 +11,12 @@ struct Edge {
     T weight;
 };
 
+template<typename T>
+struct AdjacentEdge {
+    size_t next;
+    T weight;
+};
+
 template <typename T>
 bool operator < (Edge<T>& lhs, Edge<T>& rhs) {
     return lhs.weight < rhs.weight;

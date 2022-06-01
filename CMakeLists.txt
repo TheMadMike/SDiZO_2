@@ -11,7 +11,9 @@ set(SOURCES
 src/IncidenceMatrix.cpp
 src/DisjointSet.cpp
 src/Sort.cpp
-src/MST.cpp)
+src/MST.cpp
+src/AdjacencyList.cpp
+src/List.cpp)
 
 set(TESTS
 tests/tests.cpp)

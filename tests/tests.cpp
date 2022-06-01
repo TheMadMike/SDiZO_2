@@ -5,3 +5,4 @@
 #include "DisjointSetTest.cpp"
 #include "SortTest.cpp"
 #include "MSTTest.cpp"
+#include "AdjacencyListTest.cpp"
